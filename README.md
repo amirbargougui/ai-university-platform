@@ -1,6 +1,6 @@
 # AI University Platform
 
-![Project Overview](screenshots/project-poster.png)
+![Project Overview](ai-university-platform/screenshot/screenshots)
 
 University management platform featuring an AI-powered chatbot, REST APIs, and role-based dashboards for students, professors, and administrators.
 

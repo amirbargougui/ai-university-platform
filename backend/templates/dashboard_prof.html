@@ -1,0 +1,41 @@
+{% extends "base_dashboard.html" %}
+
+{% block content %}
+<div class="section-title">Espace Enseignant</div>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-bottom: 40px;">
+    <div style="background: white; padding: 30px; border-radius: 8px; border-left: 5px solid var(--primary); box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+        <h3 style="margin-top: 0;">Mes Informations</h3>
+        <p><strong>Nom :</strong> {{ user.get_full_name }}</p>
+        <p><strong>Email :</strong> {{ user.email }}</p>
+        <p><strong>Statut :</strong> Professeur</p>
+    </div>
+</div>
+
+<h3 style="margin-bottom: 20px;">Mes Cours Enseignés</h3>
+
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>Code</th>
+                <th>Nom du Cours</th>
+                <th>Département</th>
+                <th>Crédits</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for course in courses %}
+            <tr>
+                <td><strong>{{ course.code }}</strong></td>
+                <td>{{ course.name }}</td>
+                <td>{{ course.department.name }}</td>
+                <td>{{ course.credits }}</td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="4" style="text-align: center;">Vous n'avez aucun cours assigné. Contactez l'administration.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Départements | Vision Tech University</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root{--primary:#003366;--primary-light:#004488;--secondary:#D4AF37;--secondary-light:#E8C84A;--bg:#f5f6fa;--text:#1a1a2e;--text-muted:#6b7280;--white:#ffffff;--card-shadow:0 4px 24px rgba(0,51,102,0.08);--transition:all 0.3s cubic-bezier(0.4,0,0.2,1);}
+        *{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+        body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);padding-top:72px;}
+        h1,h2,h3,h4{font-family:'Playfair Display',serif;}
+        header{position:fixed;top:0;width:100%;z-index:1000;background:rgba(0,51,102,0.97);backdrop-filter:blur(12px);box-shadow:0 2px 20px rgba(0,0,0,0.15);height:72px;}
+        .nav-container{max-width:1280px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:100%;}
+        .logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--white);font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;}
+        .logo-icon{width:38px;height:38px;background:var(--secondary);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;color:var(--primary);}
+        nav{display:flex;align-items:center;gap:4px;}
+        .nav-link{color:rgba(255,255,255,0.8);text-decoration:none;font-weight:500;font-size:0.875rem;padding:8px 14px;border-radius:6px;transition:var(--transition);}
+        .nav-link:hover,.nav-link.active{color:var(--white);background:rgba(255,255,255,0.1);}
+        .nav-link.active{color:var(--secondary);}
+        .nav-divider{width:1px;height:24px;background:rgba(255,255,255,0.15);margin:0 8px;}
+        .btn-nav-login{color:var(--secondary);text-decoration:none;font-weight:600;font-size:0.875rem;padding:8px 16px;border-radius:6px;border:1px solid rgba(212,175,55,0.4);}
+        .btn-nav-register{background:var(--secondary);color:var(--primary);text-decoration:none;font-weight:700;font-size:0.875rem;padding:8px 18px;border-radius:6px;}
+        .user-badge{display:flex;align-items:center;gap:8px;color:var(--secondary);font-weight:600;font-size:0.875rem;}
+        .btn-logout{background:#c0392b;color:white;border:none;padding:7px 14px;border-radius:6px;cursor:pointer;font-weight:600;font-size:0.8rem;}
+        .hamburger{display:none;background:none;border:none;color:white;font-size:1.4rem;cursor:pointer;}
+        .mobile-menu{display:none;position:fixed;top:72px;left:0;right:0;background:var(--primary);padding:16px 24px;z-index:999;flex-direction:column;gap:4px;}
+        .mobile-menu.open{display:flex;}.mobile-menu .nav-link{padding:12px 16px;border-radius:8px;}
+        @media(max-width:768px){nav{display:none;}.hamburger{display:block;}}
+
+        .page-hero{background:linear-gradient(135deg,#001a3e 0%,#003366 60%,#004e99 100%);padding:80px 24px 60px;text-align:center;color:white;position:relative;overflow:hidden;}
+        .page-hero::before{content:'';position:absolute;inset:0;opacity:0.04;background-image:repeating-linear-gradient(45deg,white 0,white 1px,transparent 0,transparent 50%);background-size:40px 40px;}
+        .page-hero-content{position:relative;z-index:1;max-width:700px;margin:0 auto;}
+        .breadcrumb{display:flex;align-items:center;justify-content:center;gap:8px;color:rgba(255,255,255,0.5);font-size:0.8rem;margin-bottom:20px;}
+        .breadcrumb a{color:rgba(255,255,255,0.5);text-decoration:none;}.breadcrumb a:hover{color:var(--secondary);}
+        .breadcrumb i{font-size:0.6rem;}
+        .page-hero h1{font-size:clamp(2rem,4vw,3rem);color:white;margin-bottom:16px;}
+        .page-hero p{color:rgba(255,255,255,0.7);font-size:1.05rem;line-height:1.7;}
+        .hero-tabs{display:flex;justify-content:center;gap:8px;margin-top:28px;flex-wrap:wrap;}
+        .hero-tab{background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.8);padding:8px 20px;border-radius:20px;cursor:pointer;font-size:0.85rem;font-weight:500;transition:var(--transition);font-family:'DM Sans',sans-serif;}
+        .hero-tab:hover,.hero-tab.active{background:var(--secondary);border-color:var(--secondary);color:var(--primary);font-weight:700;}
+
+        .section{padding:80px 24px;}
+        .section-inner{max-width:1280px;margin:0 auto;}
+        .section-tag{display:inline-block;background:rgba(0,51,102,0.08);color:var(--primary);padding:4px 14px;border-radius:20px;font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:12px;}
+        .section-title-left{font-size:clamp(1.4rem,2.5vw,1.8rem);color:var(--primary);margin-bottom:6px;}
+        .section-title-left::after{display:none;}
+
+        /* SEARCH + FILTER BAR */
+        .filter-bar{background:white;border-radius:16px;padding:20px 24px;box-shadow:var(--card-shadow);display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:32px;}
+        .search-wrap{flex:1;min-width:200px;position:relative;}
+        .search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--text-muted);font-size:0.9rem;}
+        .search-input{width:100%;padding:10px 14px 10px 38px;border:1.5px solid #e5e9f0;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:0.88rem;outline:none;transition:var(--transition);}
+        .search-input:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(0,51,102,0.06);}
+        .filter-select{padding:10px 36px 10px 14px;border:1.5px solid #e5e9f0;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:0.88rem;color:var(--text);outline:none;background:var(--bg);cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23003366' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;transition:var(--transition);}
+        .filter-select:focus{border-color:var(--primary);}
+        .results-count{color:var(--text-muted);font-size:0.85rem;white-space:nowrap;}
+
+        /* TABS CONTENT */
+        .tab-content{display:none;}.tab-content.active{display:block;}
+
+        /* DEPT CARDS */
+        .dept-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:24px;}
+        .dept-card{background:white;border-radius:16px;padding:32px;box-shadow:var(--card-shadow);border-left:5px solid var(--secondary);transition:var(--transition);cursor:pointer;}
+        .dept-card:hover{transform:translateY(-5px);box-shadow:0 12px 40px rgba(0,51,102,0.12);}
+        .dept-card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+        .dept-code{background:var(--primary);color:white;padding:4px 12px;border-radius:6px;font-size:0.75rem;font-weight:700;letter-spacing:0.04em;}
+        .dept-count{font-size:0.78rem;color:var(--text-muted);}
+        .dept-name{font-size:1.1rem;color:var(--primary);margin-bottom:8px;}
+        .dept-desc{color:var(--text-muted);font-size:0.85rem;line-height:1.6;margin-bottom:16px;}
+        .dept-meta{display:flex;gap:16px;}
+        .dept-meta-item{display:flex;align-items:center;gap:6px;font-size:0.78rem;color:var(--text-muted);}
+        .dept-meta-item i{color:var(--secondary);}
+
+        /* PROF CARDS */
+        .prof-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:24px;}
+        .prof-card{background:white;border-radius:16px;overflow:hidden;box-shadow:var(--card-shadow);transition:var(--transition);text-align:center;}
+        .prof-card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,51,102,0.1);}
+        .prof-img{width:100%;height:200px;object-fit:cover;background:linear-gradient(135deg,#e0e7ef,#c5d3e8);}
+        .prof-body{padding:20px;}
+        .prof-name{font-size:1rem;font-weight:600;color:var(--primary);margin-bottom:3px;}
+        .prof-title{font-size:0.82rem;color:var(--text-muted);font-style:italic;margin-bottom:8px;}
+        .prof-dept-badge{display:inline-block;background:rgba(0,51,102,0.08);color:var(--primary);padding:3px 10px;border-radius:12px;font-size:0.75rem;font-weight:600;}
+
+        /* COURSE TABLE */
+        .table-wrap{background:white;border-radius:16px;overflow:hidden;box-shadow:var(--card-shadow);}
+        .table-header{padding:20px 24px;border-bottom:1px solid #f0f2f5;display:flex;align-items:center;justify-content:space-between;}
+        .table-header h3{font-size:1rem;color:var(--primary);}
+        table{width:100%;border-collapse:collapse;min-width:600px;}
+        thead th{background:var(--primary);color:white;padding:14px 18px;text-align:left;font-size:0.82rem;font-weight:600;letter-spacing:0.03em;font-family:'DM Sans',sans-serif;}
+        tbody td{padding:14px 18px;border-bottom:1px solid #f0f2f5;font-size:0.88rem;color:var(--text);}
+        tbody tr:last-child td{border-bottom:none;}
+        tbody tr:hover td{background:#f8f9ff;}
+        .course-code{background:rgba(0,51,102,0.08);color:var(--primary);padding:2px 8px;border-radius:4px;font-weight:700;font-size:0.78rem;}
+        .credits-badge{background:#e8f5e9;color:#2e7d32;padding:2px 8px;border-radius:4px;font-size:0.78rem;font-weight:600;}
+        .no-results{text-align:center;padding:60px 20px;color:var(--text-muted);}
+        .no-results i{font-size:3rem;opacity:0.2;display:block;margin-bottom:12px;}
+
+        /* FOOTER */
+        footer{background:#001a3e;color:white;padding:60px 24px 24px;}
+        .footer-inner{max-width:1280px;margin:0 auto;}
+        .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:48px;}
+        .footer-logo{font-family:'Playfair Display',serif;font-size:1.2rem;color:white;margin-bottom:12px;}
+        .footer-tagline{color:rgba(255,255,255,0.5);font-size:0.85rem;line-height:1.6;margin-bottom:20px;}
+        .footer-socials{display:flex;gap:10px;}
+        .social-btn{width:36px;height:36px;background:rgba(255,255,255,0.08);border-radius:8px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.6);text-decoration:none;font-size:0.9rem;transition:var(--transition);}
+        .social-btn:hover{background:var(--secondary);color:var(--primary);}
+        .footer-col h5{color:var(--secondary);font-size:0.8rem;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:16px;font-weight:600;}
+        .footer-col ul{list-style:none;}.footer-col li{margin-bottom:8px;}
+        .footer-col a{color:rgba(255,255,255,0.5);text-decoration:none;font-size:0.85rem;transition:var(--transition);}.footer-col a:hover{color:var(--secondary);}
+        .footer-bottom{border-top:1px solid rgba(255,255,255,0.08);padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+        .footer-copy{color:rgba(255,255,255,0.35);font-size:0.8rem;}
+        .skeleton{background:linear-gradient(90deg,#e8ecf0 25%,#d0d8e4 50%,#e8ecf0 75%);background-size:200%;animation:shimmer 1.5s infinite;border-radius:12px;}
+        @keyframes shimmer{0%{background-position:200%}100%{background-position:-200%}}
+        @media(max-width:1024px){.footer-grid{grid-template-columns:1fr 1fr;}}
+        @media(max-width:768px){.footer-grid{grid-template-columns:1fr;}.dept-grid{grid-template-columns:1fr;}.prof-grid{grid-template-columns:repeat(2,1fr);}.section{padding:56px 20px;}.filter-bar{flex-direction:column;align-items:stretch;}}
+        @media(max-width:480px){.prof-grid{grid-template-columns:1fr;}}
+
+        /* WIDGET CHAT */
+        #chat-toggle{position:fixed;bottom:30px;right:30px;z-index:9999;width:60px;height:60px;border-radius:50%;background:var(--primary);color:white;border:none;font-size:1.6rem;cursor:pointer;box-shadow:0 4px 20px rgba(0,51,102,0.4);transition:transform 0.2s,background 0.2s;display:flex;align-items:center;justify-content:center;}
+        #chat-toggle:hover{background:var(--secondary);transform:scale(1.08);}
+        #chat-window{position:fixed;bottom:100px;right:30px;z-index:9998;width:360px;height:520px;background:#fff;border-radius:16px;box-shadow:0 8px 40px rgba(0,0,0,0.18);display:flex;flex-direction:column;overflow:hidden;transform:scale(0.95) translateY(10px);opacity:0;pointer-events:none;transition:all 0.25s cubic-bezier(0.4,0,0.2,1);}
+        #chat-window.open{transform:scale(1) translateY(0);opacity:1;pointer-events:all;}
+        .chat-header{background:var(--primary);color:white;padding:16px 20px;display:flex;align-items:center;gap:12px;flex-shrink:0;}
+        .chat-avatar{width:38px;height:38px;border-radius:50%;background:var(--secondary);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;}
+        .chat-header-info{flex:1;}.chat-header-name{font-weight:700;font-size:0.95rem;font-family:'DM Sans',sans-serif;}.chat-header-status{font-size:0.75rem;opacity:0.75;}
+        .chat-close{background:none;border:none;color:white;font-size:1.2rem;cursor:pointer;opacity:0.7;padding:4px;}.chat-close:hover{opacity:1;}
+        #chat-messages{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px;background:#f8f9fa;}
+        .msg{max-width:82%;display:flex;flex-direction:column;}.msg.user{align-self:flex-end;align-items:flex-end;}.msg.bot{align-self:flex-start;align-items:flex-start;}
+        .msg-bubble{padding:10px 14px;border-radius:16px;font-size:0.88rem;line-height:1.5;word-break:break-word;font-family:'DM Sans',sans-serif;}
+        .msg.user .msg-bubble{background:var(--primary);color:white;border-bottom-right-radius:4px;}.msg.bot .msg-bubble{background:white;color:#333;border-bottom-left-radius:4px;box-shadow:0 1px 4px rgba(0,0,0,0.08);}
+        .msg-time{font-size:0.7rem;color:#aaa;margin-top:3px;padding:0 4px;}
+        .typing-dots{display:flex;gap:4px;padding:12px 14px;}.typing-dots span{width:7px;height:7px;border-radius:50%;background:var(--primary);opacity:0.4;animation:typing 1s infinite ease-in-out;}
+        .typing-dots span:nth-child(2){animation-delay:0.15s;}.typing-dots span:nth-child(3){animation-delay:0.3s;}
+        @keyframes typing{0%,80%,100%{transform:scale(1);opacity:.4}40%{transform:scale(1.2);opacity:1}}
+        .suggestions{padding:8px 12px;display:flex;flex-wrap:wrap;gap:6px;border-top:1px solid #eee;background:white;flex-shrink:0;}
+        .suggestion-btn{background:#f0f4ff;color:var(--primary);border:1px solid #ccd6f0;border-radius:20px;padding:5px 12px;font-size:0.78rem;cursor:pointer;transition:0.2s;white-space:nowrap;}
+        .suggestion-btn:hover{background:var(--primary);color:white;border-color:var(--primary);}
+        .chat-input-zone{padding:12px 16px;border-top:1px solid #eee;display:flex;gap:8px;align-items:flex-end;background:white;flex-shrink:0;}
+        #chat-input{flex:1;border:1px solid #ddd;border-radius:20px;padding:9px 14px;font-size:0.88rem;outline:none;resize:none;font-family:'DM Sans',sans-serif;max-height:80px;overflow-y:auto;transition:border-color 0.2s;}
+        #chat-input:focus{border-color:var(--primary);}
+        #chat-send{width:38px;height:38px;border-radius:50%;flex-shrink:0;background:var(--primary);color:white;border:none;font-size:0.9rem;cursor:pointer;transition:0.2s;display:flex;align-items:center;justify-content:center;}
+        #chat-send:hover{background:var(--secondary);}#chat-send:disabled{opacity:0.4;cursor:not-allowed;}
+        @media(max-width:480px){#chat-window{width:calc(100vw - 20px);right:10px;bottom:80px;}}
+    </style>
+</head>
+<body>
+<header>
+    <div class="nav-container">
+        <a href="/" class="logo"><div class="logo-icon"><i class="fas fa-microchip"></i></div>Vision Tech University</a>
+        <nav>
+            <a href="/" class="nav-link">Accueil</a>
+            <a href="/apropos/" class="nav-link">À propos</a>
+            <a href="/departements/" class="nav-link active">Départements</a>
+            <a href="/contact/" class="nav-link">Contact</a>
+            <div class="nav-divider"></div>
+            {% if user.is_authenticated %}
+                <span class="user-badge"><i class="fas fa-user-circle"></i> {{ user.username }}</span>
+                <a href="/dashboard/" class="nav-link">Mon Espace</a>
+                <form action="/logout/" method="post" style="display:inline;">{% csrf_token %}<button type="submit" class="btn-logout">Déconnexion</button></form>
+            {% else %}
+                <a href="/login/" class="btn-nav-login">Connexion</a>
+                <a href="/register/" class="btn-nav-register">S'inscrire</a>
+            {% endif %}
+        </nav>
+        <button class="hamburger" onclick="document.getElementById('mobileMenu').classList.toggle('open')"><i class="fas fa-bars"></i></button>
+    </div>
+</header>
+<div class="mobile-menu" id="mobileMenu">
+    <a href="/" class="nav-link">Accueil</a><a href="/apropos/" class="nav-link">À propos</a>
+    <a href="/departements/" class="nav-link active">Départements</a><a href="/contact/" class="nav-link">Contact</a>
+    {% if user.is_authenticated %}<a href="/dashboard/" class="nav-link">Mon Espace</a>{% else %}<a href="/login/" class="nav-link">Connexion</a><a href="/register/" class="nav-link" style="color:var(--secondary);">S'inscrire</a>{% endif %}
+</div>
+
+<section class="page-hero">
+    <div class="page-hero-content">
+        <div class="breadcrumb"><a href="/">Accueil</a><i class="fas fa-chevron-right"></i><span style="color:var(--secondary);">Départements</span></div>
+        <h1>Départements & Formations</h1>
+        <p>Explorez nos départements, découvrez nos professeurs et consultez le catalogue des cours disponibles.</p>
+        <div class="hero-tabs">
+            <button class="hero-tab active" onclick="switchTab('depts',this)"><i class="fas fa-building" style="margin-right:6px;"></i>Départements</button>
+            <button class="hero-tab" onclick="switchTab('profs',this)"><i class="fas fa-chalkboard-teacher" style="margin-right:6px;"></i>Professeurs</button>
+            <button class="hero-tab" onclick="switchTab('courses',this)"><i class="fas fa-book" style="margin-right:6px;"></i>Cours</button>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="section-inner">
+
+        <!-- FILTER BAR -->
+        <div class="filter-bar">
+            <div class="search-wrap">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" class="search-input" id="searchInput" placeholder="Rechercher..." oninput="applyFilters()">
+            </div>
+            <select class="filter-select" id="deptFilter" onchange="applyFilters()">
+                <option value="">Tous les départements</option>
+            </select>
+            <span class="results-count" id="resultsCount"></span>
+        </div>
+
+        <!-- TAB: DÉPARTEMENTS -->
+        <div class="tab-content active" id="tab-depts">
+            <div class="dept-grid" id="dept-container">
+                <div class="skeleton" style="height:180px;"></div>
+                <div class="skeleton" style="height:180px;"></div>
+                <div class="skeleton" style="height:180px;"></div>
+            </div>
+        </div>
+
+        <!-- TAB: PROFESSEURS -->
+        <div class="tab-content" id="tab-profs">
+            <div class="prof-grid" id="prof-container">
+                <div class="skeleton" style="height:280px;"></div>
+                <div class="skeleton" style="height:280px;"></div>
+                <div class="skeleton" style="height:280px;"></div>
+                <div class="skeleton" style="height:280px;"></div>
+            </div>
+        </div>
+
+        <!-- TAB: COURS -->
+        <div class="tab-content" id="tab-courses">
+            <div class="table-wrap">
+                <div style="overflow-x:auto;">
+                    <table>
+                        <thead><tr><th>Code</th><th>Matière</th><th>Département</th><th>Professeur</th><th>Crédits</th></tr></thead>
+                        <tbody id="course-container">
+                            <tr><td colspan="5" style="text-align:center;padding:40px;color:var(--text-muted);">Chargement...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<footer>
+    <div class="footer-inner">
+        <div class="footer-grid">
+            <div><div class="footer-logo"><i class="fas fa-microchip" style="color:var(--secondary);margin-right:8px;"></i>Vision Tech University</div><p class="footer-tagline">Une institution dédiée à l'excellence académique, la recherche et l'innovation.</p><div class="footer-socials"><a href="#" class="social-btn"><i class="fab fa-facebook-f"></i></a><a href="#" class="social-btn"><i class="fab fa-twitter"></i></a><a href="#" class="social-btn"><i class="fab fa-linkedin-in"></i></a></div></div>
+            <div class="footer-col"><h5>Navigation</h5><ul><li><a href="/">Accueil</a></li><li><a href="/apropos/">À propos</a></li><li><a href="/departements/">Départements</a></li><li><a href="/contact/">Contact</a></li></ul></div>
+            <div class="footer-col"><h5>Espace étudiant</h5><ul><li><a href="/register/">Inscription</a></li><li><a href="/login/">Connexion</a></li><li><a href="/dashboard/">Mon espace</a></li></ul></div>
+            <div class="footer-col"><h5>Contact</h5><ul><li><a href="#"><i class="fas fa-map-marker-alt" style="width:14px;margin-right:6px;"></i>123 Avenue de l'Université</a></li><li><a href="tel:+123456789"><i class="fas fa-phone" style="width:14px;margin-right:6px;"></i>+123 456 789</a></li></ul></div>
+        </div>
+        <div class="footer-bottom"><span class="footer-copy">&copy; 2024 Vision Tech University. Tous droits réservés.</span></div>
+    </div>
+</footer>
+
+<button id="chat-toggle" title="Assistant académique"><i class="fas fa-robot"></i></button>
+<div id="chat-window">
+    <div class="chat-header"><div class="chat-avatar"><i class="fas fa-graduation-cap"></i></div><div class="chat-header-info"><div class="chat-header-name">Assistant Faculté</div><div class="chat-header-status">● En ligne — Réponse instantanée</div></div><button class="chat-close" onclick="toggleChat()"><i class="fas fa-times"></i></button></div>
+    <div id="chat-messages"><div class="msg bot"><div class="msg-bubble">👋 Bonjour ! Je peux vous aider à trouver des informations sur les départements, cours et professeurs.<br><br>Comment puis-je vous aider ?</div><span class="msg-time">Maintenant</span></div></div>
+    <div class="suggestions" id="suggestions"><button class="suggestion-btn" onclick="sendSuggestion(this)">Quels cours en INFO ?</button><button class="suggestion-btn" onclick="sendSuggestion(this)">Qui enseigne l'IA ?</button><button class="suggestion-btn" onclick="sendSuggestion(this)">Départements disponibles</button></div>
+    <div class="chat-input-zone"><textarea id="chat-input" placeholder="Posez votre question..." rows="1" onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea><button id="chat-send" onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button></div>
+</div>
+
+<script>
+    const API_URL='http://127.0.0.1:8000/api/';
+    const AGENT_URL='http://127.0.0.1:8000/api/agent/chat/';
+    let allDepts=[],allProfs=[],allCourses=[];
+    let activeTab='depts';
+
+    async function fetchData(endpoint){
+        try{const r=await fetch(API_URL+endpoint);const d=await r.json();return Array.isArray(d)?d:(d.results||[]);}
+        catch(e){console.error('API Error:',e);return[];}
+    }
+
+    async function init(){
+        [allDepts,allProfs,allCourses]=await Promise.all([fetchData('departments'),fetchData('professors'),fetchData('courses')]);
+        // Populate dept filter
+        const sel=document.getElementById('deptFilter');
+        allDepts.forEach(d=>{const o=document.createElement('option');o.value=d.name;o.textContent=d.name;sel.appendChild(o);});
+        renderAll();
+    }
+
+    function switchTab(tab,btn){
+        activeTab=tab;
+        document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+        document.querySelectorAll('.hero-tab').forEach(b=>b.classList.remove('active'));
+        document.getElementById('tab-'+tab).classList.add('active');
+        btn.classList.add('active');
+        // Show/hide dept filter
+        document.getElementById('deptFilter').style.display=(tab==='depts')?'none':'block';
+        document.getElementById('searchInput').value='';
+        applyFilters();
+    }
+
+    function applyFilters(){
+        const q=document.getElementById('searchInput').value.toLowerCase();
+        const dept=document.getElementById('deptFilter').value;
+        if(activeTab==='depts') renderDepts(allDepts.filter(d=>d.name.toLowerCase().includes(q)||d.code.toLowerCase().includes(q)||d.description.toLowerCase().includes(q)));
+        if(activeTab==='profs') renderProfs(allProfs.filter(p=>(p.name||'').toLowerCase().includes(q)&&(!dept||p.department_name===dept)));
+        if(activeTab==='courses') renderCourses(allCourses.filter(c=>(c.name.toLowerCase().includes(q)||c.code.toLowerCase().includes(q))&&(!dept||c.department_name===dept)));
+    }
+
+    function renderAll(){renderDepts(allDepts);renderProfs(allProfs);renderCourses(allCourses);}
+
+    function renderDepts(depts){
+        document.getElementById('resultsCount').textContent=`${depts.length} département(s)`;
+        document.getElementById('dept-container').innerHTML=depts.length?depts.map(d=>{
+            const profCount=allProfs.filter(p=>p.department_name===d.name).length;
+            const courseCount=allCourses.filter(c=>c.department_name===d.name).length;
+            return`<div class="dept-card">
+                <div class="dept-card-header"><span class="dept-code">${d.code}</span><span class="dept-count">${profCount} prof. · ${courseCount} cours</span></div>
+                <div class="dept-name">${d.name}</div>
+                <div class="dept-desc">${d.description}</div>
+                <div class="dept-meta">
+                    <div class="dept-meta-item"><i class="fas fa-chalkboard-teacher"></i>${profCount} professeur(s)</div>
+                    <div class="dept-meta-item"><i class="fas fa-book"></i>${courseCount} cours</div>
+                </div>
+            </div>`;}).join(''):`<div class="no-results" style="grid-column:1/-1;"><i class="fas fa-search"></i><p>Aucun département trouvé.</p></div>`;
+    }
+
+    function renderProfs(profs){
+        document.getElementById('resultsCount').textContent=`${profs.length} professeur(s)`;
+        document.getElementById('prof-container').innerHTML=profs.length?profs.map(p=>`
+            <div class="prof-card">
+                <img src="${p.photo_url||'https://picsum.photos/seed/prof'+p.id+'/300/200'}" class="prof-img" alt="${p.name}">
+                <div class="prof-body">
+                    <div class="prof-name">${p.name}</div>
+                    <div class="prof-title">${p.title}</div>
+                    <span class="prof-dept-badge">${p.department_name}</span>
+                </div>
+            </div>`).join(''):`<div class="no-results" style="grid-column:1/-1;"><i class="fas fa-search"></i><p>Aucun professeur trouvé.</p></div>`;
+    }
+
+    function renderCourses(courses){
+        document.getElementById('resultsCount').textContent=`${courses.length} cours`;
+        document.getElementById('course-container').innerHTML=courses.length?courses.map(c=>`
+            <tr>
+                <td><span class="course-code">${c.code}</span></td>
+                <td><strong>${c.name}</strong>${c.description?`<br><small style="color:var(--text-muted);font-size:0.78rem;">${c.description.substring(0,60)}...</small>`:''}</td>
+                <td>${c.department_name}</td>
+                <td>${c.professor_name||'<span style="color:#bbb;">Non assigné</span>'}</td>
+                <td><span class="credits-badge">${c.credits} cr.</span></td>
+            </tr>`).join(''):`<tr><td colspan="5" class="no-results"><i class="fas fa-search"></i><p>Aucun cours trouvé.</p></td></tr>`;
+    }
+
+    // Init — hide dept filter on load (depts tab active)
+    document.getElementById('deptFilter').style.display='none';
+
+    // Widget Chat
+    let chatHistory=[],isOpen=false;
+    function toggleChat(){isOpen=!isOpen;document.getElementById('chat-window').classList.toggle('open',isOpen);document.querySelector('#chat-toggle i').className=isOpen?'fas fa-times':'fas fa-robot';if(isOpen)document.getElementById('chat-input').focus();}
+    document.getElementById('chat-toggle').addEventListener('click',toggleChat);
+    function autoResize(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,80)+'px';}
+    function handleKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMessage();}}
+    function sendSuggestion(btn){document.getElementById('chat-input').value=btn.textContent;document.getElementById('suggestions').style.display='none';sendMessage();}
+    function getTime(){return new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});}
+    function appendMessage(role,text){const c=document.getElementById('chat-messages'),d=document.createElement('div');d.className=`msg ${role}`;d.innerHTML=`<div class="msg-bubble">${text.replace(/\n/g,'<br>').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>')}</div><span class="msg-time">${getTime()}</span>`;c.appendChild(d);c.scrollTop=c.scrollHeight;}
+    function showTyping(){const c=document.getElementById('chat-messages'),d=document.createElement('div');d.className='msg bot';d.id='typing-indicator';d.innerHTML='<div class="msg-bubble typing-dots"><span></span><span></span><span></span></div>';c.appendChild(d);c.scrollTop=c.scrollHeight;}
+    function removeTyping(){const el=document.getElementById('typing-indicator');if(el)el.remove();}
+    async function sendMessage(){const input=document.getElementById('chat-input'),sendBtn=document.getElementById('chat-send');const message=input.value.trim();if(!message)return;appendMessage('user',message);chatHistory.push({role:'user',content:message});input.value='';input.style.height='auto';sendBtn.disabled=true;showTyping();try{const res=await fetch(AGENT_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message,history:chatHistory.slice(-10)})});const data=await res.json();removeTyping();const reply=data.reply||data.error||'Désolé, une erreur s\'est produite.';appendMessage('bot',reply);chatHistory.push({role:'assistant',content:reply});}catch{removeTyping();appendMessage('bot','⚠️ Impossible de contacter l\'assistant.');}finally{sendBtn.disabled=false;input.focus();}}
+
+    document.addEventListener('DOMContentLoaded',init);
+</script>
+</body>
+</html>

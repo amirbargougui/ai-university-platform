@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>À Propos | Vision Tech University</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root { --primary:#003366;--primary-light:#004488;--secondary:#D4AF37;--secondary-light:#E8C84A;--bg:#f5f6fa;--text:#1a1a2e;--text-muted:#6b7280;--white:#ffffff;--card-shadow:0 4px 24px rgba(0,51,102,0.08);--transition:all 0.3s cubic-bezier(0.4,0,0.2,1); }
+        *{margin:0;padding:0;box-sizing:border-box;} html{scroll-behavior:smooth;}
+        body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);padding-top:72px;}
+        h1,h2,h3,h4{font-family:'Playfair Display',serif;}
+
+        /* NAV */
+        header{position:fixed;top:0;width:100%;z-index:1000;background:rgba(0,51,102,0.97);backdrop-filter:blur(12px);box-shadow:0 2px 20px rgba(0,0,0,0.15);height:72px;}
+        .nav-container{max-width:1280px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:100%;}
+        .logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--white);font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;}
+        .logo-icon{width:38px;height:38px;background:var(--secondary);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;color:var(--primary);}
+        nav{display:flex;align-items:center;gap:4px;}
+        .nav-link{color:rgba(255,255,255,0.8);text-decoration:none;font-weight:500;font-size:0.875rem;padding:8px 14px;border-radius:6px;transition:var(--transition);}
+        .nav-link:hover,.nav-link.active{color:var(--white);background:rgba(255,255,255,0.1);}
+        .nav-link.active{color:var(--secondary);}
+        .nav-divider{width:1px;height:24px;background:rgba(255,255,255,0.15);margin:0 8px;}
+        .btn-nav-login{color:var(--secondary);text-decoration:none;font-weight:600;font-size:0.875rem;padding:8px 16px;border-radius:6px;border:1px solid rgba(212,175,55,0.4);transition:var(--transition);}
+        .btn-nav-register{background:var(--secondary);color:var(--primary);text-decoration:none;font-weight:700;font-size:0.875rem;padding:8px 18px;border-radius:6px;transition:var(--transition);}
+        .btn-nav-register:hover{background:var(--secondary-light);}
+        .user-badge{display:flex;align-items:center;gap:8px;color:var(--secondary);font-weight:600;font-size:0.875rem;}
+        .btn-logout{background:#c0392b;color:white;border:none;padding:7px 14px;border-radius:6px;cursor:pointer;font-weight:600;font-size:0.8rem;}
+        .hamburger{display:none;background:none;border:none;color:white;font-size:1.4rem;cursor:pointer;}
+        .mobile-menu{display:none;position:fixed;top:72px;left:0;right:0;background:var(--primary);padding:16px 24px;z-index:999;flex-direction:column;gap:4px;box-shadow:0 8px 24px rgba(0,0,0,0.2);}
+        .mobile-menu.open{display:flex;}
+        .mobile-menu .nav-link{padding:12px 16px;border-radius:8px;}
+        @media(max-width:768px){nav{display:none;}.hamburger{display:block;}}
+
+        /* PAGE HERO */
+        .page-hero{background:linear-gradient(135deg,#001a3e 0%,#003366 60%,#004e99 100%);padding:72px 24px 40px;text-align:center;color:white;position:relative;overflow:hidden;}
+        .page-hero::before{content:'';position:absolute;inset:0;opacity:0.04;background-image:repeating-linear-gradient(45deg,white 0,white 1px,transparent 0,transparent 50%);background-size:40px 40px;}
+        .page-hero-content{position:relative;z-index:1;max-width:700px;margin:0 auto;}
+        .breadcrumb{display:flex;align-items:center;justify-content:center;gap:8px;color:rgba(255,255,255,0.5);font-size:0.8rem;margin-bottom:20px;}
+        .breadcrumb a{color:rgba(255,255,255,0.5);text-decoration:none;transition:var(--transition);}
+        .breadcrumb a:hover{color:var(--secondary);}
+        .breadcrumb i{font-size:0.6rem;}
+        .page-hero h1{font-size:clamp(2rem,4vw,3rem);color:white;margin-bottom:16px;}
+        .page-hero p{color:rgba(255,255,255,0.7);font-size:1.05rem;line-height:1.7;}
+
+        /* SECTIONS */
+        .section{padding:56px 24px;}
+        .section-inner{max-width:1280px;margin:0 auto;}
+        .section-tag{display:inline-block;background:rgba(0,51,102,0.08);color:var(--primary);padding:4px 14px;border-radius:20px;font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:12px;}
+        .section-title{font-size:clamp(1.6rem,3vw,2.2rem);color:var(--primary);margin-bottom:14px;position:relative;display:inline-block;}
+        .section-title::after{content:'';position:absolute;bottom:-8px;left:0;width:48px;height:3px;background:var(--secondary);border-radius:2px;}
+        .section-subtitle{color:var(--text-muted);font-size:1rem;max-width:520px;margin:20px 0 0;line-height:1.6;}
+
+        /* ABOUT INTRO */
+        .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;}
+        .about-img-wrap{position:relative;}
+        .about-img{width:100%;height:420px;object-fit:cover;border-radius:20px;background:linear-gradient(135deg,#003366,#004e99);}
+        .about-img-placeholder{width:100%;height:420px;border-radius:20px;background:linear-gradient(135deg,var(--primary) 0%,#004e99 100%);display:flex;align-items:center;justify-content:center;font-size:5rem;color:rgba(255,255,255,0.2);}
+        .about-badge{position:absolute;bottom:-20px;right:-20px;background:var(--secondary);color:var(--primary);padding:20px 24px;border-radius:16px;text-align:center;box-shadow:0 8px 32px rgba(212,175,55,0.3);}
+        .about-badge-num{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;}
+        .about-badge-label{font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;}
+        .about-text p{color:var(--text-muted);line-height:1.8;margin-bottom:16px;font-size:0.95rem;}
+        .about-highlights{display:flex;flex-direction:column;gap:12px;margin-top:24px;}
+        .highlight-item{display:flex;align-items:flex-start;gap:12px;}
+        .highlight-icon{width:36px;height:36px;background:rgba(0,51,102,0.08);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--primary);font-size:0.9rem;flex-shrink:0;margin-top:2px;}
+        .highlight-content h4{font-size:0.9rem;font-weight:600;color:var(--primary);margin-bottom:3px;font-family:'DM Sans',sans-serif;}
+        .highlight-content p{font-size:0.85rem;color:var(--text-muted);line-height:1.5;}
+
+        /* MISSION / VISION / VALEURS */
+        .mvv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+        .mvv-card{background:white;border-radius:16px;padding:36px 28px;box-shadow:var(--card-shadow);position:relative;overflow:hidden;transition:var(--transition);}
+        .mvv-card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,51,102,0.12);}
+        .mvv-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;}
+        .mvv-card:nth-child(1)::before{background:var(--primary);}
+        .mvv-card:nth-child(2)::before{background:var(--secondary);}
+        .mvv-card:nth-child(3)::before{background:#2ecc71;}
+        .mvv-icon{width:56px;height:56px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:20px;}
+        .mvv-card:nth-child(1) .mvv-icon{background:rgba(0,51,102,0.08);color:var(--primary);}
+        .mvv-card:nth-child(2) .mvv-icon{background:rgba(212,175,55,0.12);color:#b8860b;}
+        .mvv-card:nth-child(3) .mvv-icon{background:rgba(46,204,113,0.1);color:#27ae60;}
+        .mvv-title{font-size:1.15rem;color:var(--primary);margin-bottom:12px;}
+        .mvv-text{color:var(--text-muted);font-size:0.88rem;line-height:1.7;}
+
+        /* STATS ROW */
+        .stats-row{background:var(--primary);border-radius:20px;padding:32px;display:grid;grid-template-columns:repeat(4,1fr);gap:24px;text-align:center;}
+        .stats-item .num{font-family:'Playfair Display',serif;font-size:2.5rem;font-weight:700;color:var(--secondary);}
+        .stats-item .label{color:rgba(255,255,255,0.6);font-size:0.8rem;margin-top:4px;text-transform:uppercase;letter-spacing:0.06em;}
+
+        /* TEAM */
+        .team-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:24px;}
+        .team-card{background:white;border-radius:16px;overflow:hidden;box-shadow:var(--card-shadow);text-align:center;transition:var(--transition);}
+        .team-card:hover{transform:translateY(-4px);}
+        .team-img{width:100%;height:260px;object-fit:cover;object-position:center center;display:block;border-top-left-radius:12px;border-top-right-radius:12px;background:transparent;-webkit-backface-visibility:hidden;backface-visibility:hidden;transform:translateZ(0);}
+        .team-body{padding:20px;}
+        .team-name{font-size:1rem;font-weight:600;color:var(--primary);margin-bottom:4px;}
+        .team-title{font-size:0.82rem;color:var(--text-muted);font-style:italic;margin-bottom:8px;}
+        .team-dept{font-size:0.78rem;color:var(--secondary);font-weight:600;text-transform:uppercase;letter-spacing:0.04em;}
+
+        /* FOOTER */
+        footer{background:#001a3e;color:white;padding:60px 24px 24px;}
+        .footer-inner{max-width:1280px;margin:0 auto;}
+        .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:48px;}
+        .footer-logo{font-family:'Playfair Display',serif;font-size:1.2rem;color:white;margin-bottom:12px;}
+        .footer-tagline{color:rgba(255,255,255,0.5);font-size:0.85rem;line-height:1.6;margin-bottom:20px;}
+        .footer-socials{display:flex;gap:10px;}
+        .social-btn{width:36px;height:36px;background:rgba(255,255,255,0.08);border-radius:8px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.6);text-decoration:none;font-size:0.9rem;transition:var(--transition);}
+        .social-btn:hover{background:var(--secondary);color:var(--primary);}
+        .footer-col h5{color:var(--secondary);font-size:0.8rem;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:16px;font-weight:600;}
+        .footer-col ul{list-style:none;}
+        .footer-col li{margin-bottom:8px;}
+        .footer-col a{color:rgba(255,255,255,0.5);text-decoration:none;font-size:0.85rem;transition:var(--transition);}
+        .footer-col a:hover{color:var(--secondary);}
+        .footer-bottom{border-top:1px solid rgba(255,255,255,0.08);padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+        .footer-copy{color:rgba(255,255,255,0.35);font-size:0.8rem;}
+
+        /* ANIMATIONS */
+        .reveal{opacity:0;transform:translateY(30px);transition:opacity 0.6s ease,transform 0.6s ease;}
+        .reveal.visible{opacity:1;transform:translateY(0);}
+        .skeleton{background:linear-gradient(90deg,#e8ecf0 25%,#d0d8e4 50%,#e8ecf0 75%);background-size:200%;animation:shimmer 1.5s infinite;border-radius:12px;height:220px;}
+        @keyframes shimmer{0%{background-position:200%}100%{background-position:-200%}}
+
+        /* RESPONSIVE */
+        @media(max-width:1024px){.footer-grid{grid-template-columns:1fr 1fr;}.about-grid{grid-template-columns:1fr;}.mvv-grid{grid-template-columns:1fr 1fr;}.stats-row{grid-template-columns:repeat(2,1fr);}}
+        @media(max-width:768px){.mvv-grid{grid-template-columns:1fr;}.stats-row{grid-template-columns:1fr 1fr;padding:32px 20px;}.footer-grid{grid-template-columns:1fr;}.about-badge{bottom:-10px;right:10px;}.section{padding:56px 20px;}}
+
+        /* WIDGET CHAT */
+        #chat-toggle{position:fixed;bottom:30px;right:30px;z-index:9999;width:60px;height:60px;border-radius:50%;background:var(--primary);color:white;border:none;font-size:1.6rem;cursor:pointer;box-shadow:0 4px 20px rgba(0,51,102,0.4);transition:transform 0.2s,background 0.2s;display:flex;align-items:center;justify-content:center;}
+        #chat-toggle:hover{background:var(--secondary);transform:scale(1.08);}
+        #chat-window{position:fixed;bottom:100px;right:30px;z-index:9998;width:360px;height:520px;background:#fff;border-radius:16px;box-shadow:0 8px 40px rgba(0,0,0,0.18);display:flex;flex-direction:column;overflow:hidden;transform:scale(0.95) translateY(10px);opacity:0;pointer-events:none;transition:all 0.25s cubic-bezier(0.4,0,0.2,1);}
+        #chat-window.open{transform:scale(1) translateY(0);opacity:1;pointer-events:all;}
+        .chat-header{background:var(--primary);color:white;padding:16px 20px;display:flex;align-items:center;gap:12px;flex-shrink:0;}
+        .chat-avatar{width:38px;height:38px;border-radius:50%;background:var(--secondary);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;}
+        .chat-header-info{flex:1;}.chat-header-name{font-weight:700;font-size:0.95rem;font-family:'DM Sans',sans-serif;}.chat-header-status{font-size:0.75rem;opacity:0.75;}
+        .chat-close{background:none;border:none;color:white;font-size:1.2rem;cursor:pointer;opacity:0.7;padding:4px;}.chat-close:hover{opacity:1;}
+        #chat-messages{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px;background:#f8f9fa;}
+        .msg{max-width:82%;display:flex;flex-direction:column;}.msg.user{align-self:flex-end;align-items:flex-end;}.msg.bot{align-self:flex-start;align-items:flex-start;}
+        .msg-bubble{padding:10px 14px;border-radius:16px;font-size:0.88rem;line-height:1.5;word-break:break-word;font-family:'DM Sans',sans-serif;}
+        .msg.user .msg-bubble{background:var(--primary);color:white;border-bottom-right-radius:4px;}.msg.bot .msg-bubble{background:white;color:#333;border-bottom-left-radius:4px;box-shadow:0 1px 4px rgba(0,0,0,0.08);}
+        .msg-time{font-size:0.7rem;color:#aaa;margin-top:3px;padding:0 4px;}
+        .typing-dots{display:flex;gap:4px;padding:12px 14px;}.typing-dots span{width:7px;height:7px;border-radius:50%;background:var(--primary);opacity:0.4;animation:typing 1s infinite ease-in-out;}
+        .typing-dots span:nth-child(2){animation-delay:0.15s;}.typing-dots span:nth-child(3){animation-delay:0.3s;}
+        @keyframes typing{0%,80%,100%{transform:scale(1);opacity:.4}40%{transform:scale(1.2);opacity:1}}
+        .suggestions{padding:8px 12px;display:flex;flex-wrap:wrap;gap:6px;border-top:1px solid #eee;background:white;flex-shrink:0;}
+        .suggestion-btn{background:#f0f4ff;color:var(--primary);border:1px solid #ccd6f0;border-radius:20px;padding:5px 12px;font-size:0.78rem;cursor:pointer;transition:0.2s;white-space:nowrap;font-family:'DM Sans',sans-serif;}
+        .suggestion-btn:hover{background:var(--primary);color:white;border-color:var(--primary);}
+        .chat-input-zone{padding:12px 16px;border-top:1px solid #eee;display:flex;gap:8px;align-items:flex-end;background:white;flex-shrink:0;}
+        #chat-input{flex:1;border:1px solid #ddd;border-radius:20px;padding:9px 14px;font-size:0.88rem;outline:none;resize:none;font-family:'DM Sans',sans-serif;max-height:80px;overflow-y:auto;transition:border-color 0.2s;}
+        #chat-input:focus{border-color:var(--primary);}
+        #chat-send{width:38px;height:38px;border-radius:50%;flex-shrink:0;background:var(--primary);color:white;border:none;font-size:0.9rem;cursor:pointer;transition:0.2s;display:flex;align-items:center;justify-content:center;}
+        #chat-send:hover{background:var(--secondary);}#chat-send:disabled{opacity:0.4;cursor:not-allowed;}
+        @media(max-width:480px){#chat-window{width:calc(100vw - 20px);right:10px;bottom:80px;}}
+
+        /* ── NAVIGATION LATÉRALE FLOTTANTE ── */
+        #side-nav {
+            position: fixed;
+            left: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 9990;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0;
+        }
+        #side-nav-btn {
+            width: auto;
+            height: 48px;
+            padding: 0 18px;
+            border-radius: 24px;
+            background: rgba(0,51,102,0.85);
+            color: white;
+            border: 1px solid rgba(212,175,55,0.4);
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 8px 32px rgba(0,51,102,0.25), inset 0 1px 0 rgba(255,255,255,0.1);
+            transition: all 0.4s cubic-bezier(0.34,1.56,0.64,1);
+            position: relative;
+            z-index: 1;
+            backdrop-filter: blur(12px);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            font-size: 0.85rem;
+        }
+        #side-nav-btn:hover { 
+            background: rgba(212,175,55,0.9);
+            border-color: rgba(212,175,55,0.8);
+            color: var(--primary);
+            transform: translateX(8px);
+            box-shadow: 0 12px 40px rgba(212,175,55,0.35), inset 0 1px 0 rgba(255,255,255,0.2);
+        }
+        #side-nav-btn:active {
+            transform: translateX(4px);
+        }
+        #side-nav-panel {
+            display: none;
+            margin-top: 12px;
+            margin-left: 0;
+            background: rgba(255,255,255,0.97);
+            border-radius: 16px;
+            border: 1px solid rgba(0,51,102,0.1);
+            box-shadow: 0 16px 48px rgba(0,51,102,0.12);
+            padding: 12px;
+            min-width: 260px;
+            animation: slideInLeft 0.35s cubic-bezier(0.34,1.56,0.64,1);
+            backdrop-filter: blur(10px);
+        }
+        @keyframes slideInLeft { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
+        .snav-section-label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #d4af37;
+            padding: 10px 14px 6px;
+            margin-top: 8px;
+        }
+        .snav-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 11px 14px;
+            border-radius: 11px;
+            color: #1a1a2e;
+            text-decoration: none;
+            font-size: 0.92rem;
+            font-weight: 500;
+            transition: all 0.25s cubic-bezier(0.34,1.56,0.64,1);
+            position: relative;
+        }
+        .snav-link:hover { 
+            background: rgba(0,51,102,0.07);
+            color: var(--primary);
+            padding-left: 18px;
+        }
+        .snav-link i { 
+            width: 18px; 
+            color: var(--secondary); 
+            font-size: 0.9rem; 
+            flex-shrink: 0; 
+            transition: all 0.25s;
+        }
+        .snav-link:hover i {
+            color: var(--primary);
+        }
+        .snav-divider { 
+            height: 1px; 
+            background: linear-gradient(90deg, transparent, rgba(0,51,102,0.08), transparent);
+            margin: 8px 0;
+        }
+        /* Scroll margin pour la navigation fixe */
+        section { scroll-margin-top: 80px; }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="nav-container">
+        <a href="/" class="logo"><div class="logo-icon"><i class="fas fa-microchip"></i></div>Vision Tech University</a>
+        <nav>
+            <a href="/" class="nav-link">Accueil</a>
+            <a href="/apropos/" class="nav-link active">À propos</a>
+            <a href="/departements/" class="nav-link">Départements</a>
+            <a href="/contact/" class="nav-link">Contact</a>
+            <div class="nav-divider"></div>
+            {% if user.is_authenticated %}
+                <span class="user-badge"><i class="fas fa-user-circle"></i> {{ user.username }}</span>
+                <a href="/dashboard/" class="nav-link">Mon Espace</a>
+                <form action="/logout/" method="post" style="display:inline;">{% csrf_token %}<button type="submit" class="btn-logout">Déconnexion</button></form>
+            {% else %}
+                <a href="/login/" class="btn-nav-login">Connexion</a>
+                <a href="/register/" class="btn-nav-register">S'inscrire</a>
+            {% endif %}
+        </nav>
+        <button class="hamburger" onclick="document.getElementById('mobileMenu').classList.toggle('open')"><i class="fas fa-bars"></i></button>
+    </div>
+</header>
+<div class="mobile-menu" id="mobileMenu">
+    <a href="/" class="nav-link">Accueil</a><a href="/apropos/" class="nav-link active">À propos</a>
+    <a href="/departements/" class="nav-link">Départements</a><a href="/contact/" class="nav-link">Contact</a>
+    {% if user.is_authenticated %}<a href="/dashboard/" class="nav-link">Mon Espace</a>{% else %}<a href="/login/" class="nav-link">Connexion</a><a href="/register/" class="nav-link" style="color:var(--secondary);">S'inscrire</a>{% endif %}
+</div>
+
+<!-- PAGE HERO -->
+<section class="page-hero" id="hero">
+    <div class="page-hero-content">
+        <div class="breadcrumb">
+            <a href="/">Accueil</a><i class="fas fa-chevron-right"></i><span style="color:var(--secondary);">À propos</span>
+        </div>
+        <h1>À Propos de Nous</h1>
+        <p>Découvrez notre histoire, notre mission et les valeurs qui guident notre engagement envers l'excellence académique.</p>
+    </div>
+</section>
+
+<!-- PRÉSENTATION -->
+<section class="section" id="presentation" style="background:white;">
+    <div class="section-inner">
+        <div class="about-grid">
+            <div class="about-img-wrap reveal">
+                <div class="about-img-placeholder"><i class="fas fa-university"></i></div>
+                <div class="about-badge">
+                    <div class="about-badge-num">20+</div>
+                    <div class="about-badge-label">Années d'excellence</div>
+                </div>
+            </div>
+            <div class="about-text reveal" style="transition-delay:0.15s">
+                <div class="section-tag">Notre histoire</div>
+                <h2 class="section-title">Une institution fondée sur l'excellence</h2>
+                <p>Fondée il y a plus de deux décennies, Vision Tech University s'est imposée comme l'une des institutions d'enseignement supérieur les plus reconnues de la région. Notre engagement envers la qualité académique et l'innovation pédagogique nous a permis de former des milliers de diplômés qui occupent aujourd'hui des postes clés dans l'industrie et la recherche.</p>
+                <p>Notre faculté d'informatique, fleuron de l'établissement, propose des formations à la pointe de la technologie, combinant théorie rigoureuse et pratique intensive. Nous croyons fermement que l'avenir appartient à ceux qui maîtrisent les outils numériques.</p>
+                <div class="about-highlights">
+                    <div class="highlight-item">
+                        <div class="highlight-icon"><i class="fas fa-award"></i></div>
+                        <div class="highlight-content"><h4>Accréditation internationale</h4><p>Nos diplômes sont reconnus par les organisations académiques internationales.</p></div>
+                    </div>
+                    <div class="highlight-item">
+                        <div class="highlight-icon"><i class="fas fa-handshake"></i></div>
+                        <div class="highlight-content"><h4>Partenariats industriels</h4><p>Collaboration avec les entreprises leaders du secteur technologique.</p></div>
+                    </div>
+                    <div class="highlight-item">
+                        <div class="highlight-icon"><i class="fas fa-robot"></i></div>
+                        <div class="highlight-content"><h4>Innovation pédagogique</h4><p>Intégration de l'IA dans l'expérience étudiante avec notre assistant intelligent.</p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+        <!-- STATS (intégré à la section précédente) -->
+        <div class="section-inner reveal" style="margin-top:28px;">
+            <div class="stats-row">
+                <div class="stats-item"><div class="num" id="stat-courses">—</div><div class="label">Cours disponibles</div></div>
+                <div class="stats-item"><div class="num" id="stat-profs">—</div><div class="label">Professeurs experts</div></div>
+                <div class="stats-item"><div class="num" id="stat-depts">—</div><div class="label">Départements</div></div>
+                <div class="stats-item"><div class="num">24/7</div><div class="label">Assistant IA</div></div>
+            </div>
+        </div>
+
+<!-- MISSION / VISION / VALEURS -->
+<section class="section" id="mission" style="background:white;">
+    <div class="section-inner">
+        <div class="section-header reveal" style="text-align:left;">
+            <div class="section-tag">Nos engagements</div>
+            <h2 class="section-title">Mission, Vision  Valeurs</h2>
+        </div>
+        <div class="mvv-grid">
+            <div class="mvv-card reveal">
+                <div class="mvv-icon"><i class="fas fa-bullseye"></i></div>
+                <h3 class="mvv-title">Notre Mission</h3>
+                <p class="mvv-text">Former des professionnels compétents, éthiques et innovants, capables de relever les défis technologiques du 21ème siècle. Nous nous engageons à offrir un enseignement de qualité, accessible et ancré dans les réalités du monde professionnel.</p>
+            </div>
+            <div class="mvv-card reveal" style="transition-delay:0.1s">
+                <div class="mvv-icon"><i class="fas fa-eye"></i></div>
+                <h3 class="mvv-title">Notre Vision</h3>
+                <p class="mvv-text">Devenir un centre d'excellence académique et de recherche reconnu à l'échelle internationale, en formant les leaders technologiques de demain et en contribuant activement au développement numérique de la société.</p>
+            </div>
+            <div class="mvv-card reveal" style="transition-delay:0.2s">
+                <div class="mvv-icon"><i class="fas fa-heart"></i></div>
+                <h3 class="mvv-title">Nos Valeurs</h3>
+                <p class="mvv-text">Excellence académique, intégrité intellectuelle, innovation continue, ouverture sur le monde et engagement social. Ces valeurs fondamentales guident chacune de nos décisions pédagogiques et institutionnelles.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ÉQUIPE (chargée dynamiquement) -->
+<section class="section">
+    <div class="section-inner">
+        <div class="section-header reveal" style="text-align:center;margin-bottom:48px;">
+            <div class="section-tag">Notre équipe</div>
+            <h2 class="section-title" style="display:block;text-align:center;">Corps Professoral</h2>
+            <div style="width:48px;height:3px;background:var(--secondary);border-radius:2px;margin:16px auto 0;"></div>
+            <p class="section-subtitle" style="text-align:center;margin:20px auto 0;">Des experts passionnés dédiés à votre réussite.</p>
+        </div>
+        <div class="team-grid" id="team-container">
+            <div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <div class="footer-inner">
+        <div class="footer-grid">
+            <div>
+                <div class="footer-logo"><i class="fas fa-microchip" style="color:var(--secondary);margin-right:8px;"></i>Vision Tech University</div>
+                <p class="footer-tagline">Une institution dédiée à l'excellence académique, la recherche et l'innovation.</p>
+                <div class="footer-socials">
+                    <a href="#" class="social-btn"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-btn"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-btn"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="footer-col"><h5>Navigation</h5><ul><li><a href="/">Accueil</a></li><li><a href="/apropos/">À propos</a></li><li><a href="/departements/">Départements</a></li><li><a href="/contact/">Contact</a></li></ul></div>
+            <div class="footer-col"><h5>Espace étudiant</h5><ul><li><a href="/register/">Inscription</a></li><li><a href="/login/">Connexion</a></li><li><a href="/dashboard/">Mon espace</a></li></ul></div>
+            <div class="footer-col"><h5>Contact</h5><ul><li><a href="#"><i class="fas fa-map-marker-alt" style="width:14px;margin-right:6px;"></i>123 Avenue de l'Université</a></li><li><a href="tel:+123456789"><i class="fas fa-phone" style="width:14px;margin-right:6px;"></i>+123 456 789</a></li><li><a href="mailto:contact@universite.fr"><i class="fas fa-envelope" style="width:14px;margin-right:6px;"></i>contact@universite.fr</a></li></ul></div>
+        </div>
+        <div class="footer-bottom">
+            <span class="footer-copy">&copy; 2024 Vision Tech University. Tous droits réservés.</span>
+            <span class="footer-copy"><a href="#" style="color:rgba(255,255,255,0.35);text-decoration:none;">Mentions légales</a></span>
+        </div>
+    </div>
+</footer>
+
+<!-- WIDGET CHAT -->
+<button id="chat-toggle" title="Assistant académique"><i class="fas fa-robot"></i></button>
+<div id="chat-window">
+    <div class="chat-header"><div class="chat-avatar"><i class="fas fa-graduation-cap"></i></div><div class="chat-header-info"><div class="chat-header-name">Assistant Faculté</div><div class="chat-header-status">● En ligne — Réponse instantanée</div></div><button class="chat-close" onclick="toggleChat()"><i class="fas fa-times"></i></button></div>
+    <div id="chat-messages"><div class="msg bot"><div class="msg-bubble">👋 Bonjour ! Je suis l'assistant de la Faculté d'Informatique.<br><br>Comment puis-je vous aider ?</div><span class="msg-time">Maintenant</span></div></div>
+    <div class="suggestions" id="suggestions"><button class="suggestion-btn" onclick="sendSuggestion(this)">Quels cours en INFO ?</button><button class="suggestion-btn" onclick="sendSuggestion(this)">Qui enseigne l'IA ?</button><button class="suggestion-btn" onclick="sendSuggestion(this)">Départements disponibles</button></div>
+    <div class="chat-input-zone"><textarea id="chat-input" placeholder="Posez votre question..." rows="1" onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea><button id="chat-send" onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button></div>
+</div>
+
+<script>
+    const API_URL='http://127.0.0.1:8000/api/';
+    const AGENT_URL='http://127.0.0.1:8000/api/agent/chat/';
+    async function fetchData(e){try{const r=await fetch(API_URL+e),d=await r.json();return Array.isArray(d)?d:(d.results||[]);}catch(e){return[];}}
+    async function init(){
+        const[profs,courses,depts]=await Promise.all([fetchData('professors'),fetchData('courses'),fetchData('departments')]);
+        document.getElementById('stat-profs').textContent=profs.length;
+        document.getElementById('stat-courses').textContent=courses.length;
+        document.getElementById('stat-depts').textContent=depts.length;
+        // fixed professional portraits for known professors
+        const fixedPortraits = {
+            'Karim Benali': 'https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-4.0.3&q=80&fm=jpg&crop=faces&fit=crop&h=800&w=800',
+            'Sara Hamdi': 'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?ixlib=rb-4.0.3&q=80&fm=jpg&crop=faces&fit=crop&h=800&w=800',
+            'Omar Khelifi': 'https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?ixlib=rb-4.0.3&q=80&fm=jpg&crop=faces&fit=crop&h=800&w=800',
+            'Lina Messaoud': 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&q=80&fm=jpg&crop=faces&fit=crop&h=800&w=800'
+        };
+
+        const teamHtml = (profs && profs.length ? profs.slice(0,4) : [
+            {id:1,name:'Karim Benali',title:'Professeur',department_name:'Département Informatique'},
+            {id:2,name:'Sara Hamdi',title:'Maître de conférences A',department_name:'Département Informatique'},
+            {id:3,name:'Omar Khelifi',title:'Maître de conférences B',department_name:"Département Mathématiques & Informatique"},
+            {id:4,name:'Lina Messaoud',title:'Professeur',department_name:"Département Systèmes d'Information"}
+        ]).map((p,i)=>{
+            const seed = Number(p.id) || i;
+            const provided = (p.photo_url||'').toString();
+            const isPlaceholder = /picsum|placeholder|seed\/prof|avatar|lorempixel|dummyimage|randomuser|picsum\.photos/i.test(provided);
+            let photoUrl = fixedPortraits[p.name] || (provided && !isPlaceholder ? provided : `https://source.unsplash.com/600x600/?portrait,headshot,professional&sig=${seed}`);
+            const onerr = `this.onerror=null;this.src='https://source.unsplash.com/400x400/?portrait,face&sig=${seed}';`;
+            return `
+            <div class="team-card">
+                <img src="${photoUrl}" onerror="${onerr}" class="team-img" alt="${p.name}">
+                <div class="team-body"><div class="team-name">${p.name}</div><div class="team-title">${p.title}</div><div class="team-dept">${p.department_name}</div></div>
+            </div>`
+        }).join('');
+        document.getElementById('team-container').innerHTML = teamHtml || '<p style="color:#999;grid-column:1/-1;text-align:center;">Aucun professeur disponible.</p>';
+    }
+    const observer=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:0.1});
+    document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+    let chatHistory=[],isOpen=false;
+    function toggleChat(){isOpen=!isOpen;document.getElementById('chat-window').classList.toggle('open',isOpen);document.querySelector('#chat-toggle i').className=isOpen?'fas fa-times':'fas fa-robot';if(isOpen)document.getElementById('chat-input').focus();}
+    document.getElementById('chat-toggle').addEventListener('click',toggleChat);
+    function autoResize(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,80)+'px';}
+    function handleKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMessage();}}
+    function sendSuggestion(btn){document.getElementById('chat-input').value=btn.textContent;document.getElementById('suggestions').style.display='none';sendMessage();}
+    function getTime(){return new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});}
+    function appendMessage(role,text){const c=document.getElementById('chat-messages'),d=document.createElement('div');d.className=`msg ${role}`;d.innerHTML=`<div class="msg-bubble">${text.replace(/\n/g,'<br>').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>')}</div><span class="msg-time">${getTime()}</span>`;c.appendChild(d);c.scrollTop=c.scrollHeight;}
+    function showTyping(){const c=document.getElementById('chat-messages'),d=document.createElement('div');d.className='msg bot';d.id='typing-indicator';d.innerHTML='<div class="msg-bubble typing-dots"><span></span><span></span><span></span></div>';c.appendChild(d);c.scrollTop=c.scrollHeight;}
+    function removeTyping(){const el=document.getElementById('typing-indicator');if(el)el.remove();}
+    async function sendMessage(){const input=document.getElementById('chat-input'),sendBtn=document.getElementById('chat-send');const message=input.value.trim();if(!message)return;appendMessage('user',message);chatHistory.push({role:'user',content:message});input.value='';input.style.height='auto';sendBtn.disabled=true;showTyping();try{const res=await fetch(AGENT_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message,history:chatHistory.slice(-10)})});const data=await res.json();removeTyping();const reply=data.reply||data.error||'Désolé, une erreur s\'est produite.';appendMessage('bot',reply);chatHistory.push({role:'assistant',content:reply});}catch{removeTyping();appendMessage('bot','⚠️ Impossible de contacter l\'assistant.');}finally{sendBtn.disabled=false;input.focus();}}
+    document.addEventListener('DOMContentLoaded',init);
+    
+    // ── Side nav ──
+    function toggleSideNav() {
+        const panel = document.getElementById('side-nav-panel');
+        const isOpen = panel.style.display === 'block';
+        panel.style.display = isOpen ? 'none' : 'block';
+    }
+    function closeSideNav() {
+        document.getElementById('side-nav-panel').style.display = 'none';
+    }
+    document.addEventListener('click', function(e) {
+        const nav = document.getElementById('side-nav');
+        if (nav && !nav.contains(e.target)) closeSideNav();
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,62 @@
+{% extends "base_dashboard.html" %}
+
+{% block content %}
+<div class="auth-container">
+    <div style="text-align:center;margin-bottom:24px;">
+        <div style="width:60px;height:60px;background:var(--primary);border-radius:14px;display:inline-flex;align-items:center;justify-content:center;font-size:1.6rem;color:var(--secondary);margin-bottom:16px;">
+            <i class="fas fa-user-plus"></i>
+        </div>
+        <h2 style="color:var(--primary);font-family:'Playfair Display',serif;">Créer un compte</h2>
+        <p style="color:#888;font-size:0.9rem;margin-top:6px;">Rejoignez Vision Tech University</p>
+    </div>
+
+    {% if form.errors %}
+        <div style="background:#f8d7da;color:#721c24;padding:12px 16px;border-radius:8px;margin-bottom:20px;font-size:0.88rem;">
+            <i class="fas fa-exclamation-triangle" style="margin-right:6px;"></i>
+            {% for field, errors in form.errors.items %}
+                {% for error in errors %}{{ error }} {% endfor %}
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label>Nom d'utilisateur</label>
+            <input type="text" name="username" class="form-control" required placeholder="Choisissez un nom d'utilisateur">
+        </div>
+        <div class="form-group">
+            <label>Mot de passe</label>
+            <input type="password" name="password1" class="form-control" required placeholder="Choisissez un mot de passe">
+        </div>
+        <div class="form-group">
+            <label>Confirmer le mot de passe</label>
+            <input type="password" name="password2" class="form-control" required placeholder="Répétez le mot de passe">
+        </div>
+        <div class="form-group">
+            <label>Vous êtes :</label>
+            <select name="role" class="form-control" style="width:100%;padding:12px;border:1.5px solid #e5e9f0;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:0.9rem;outline:none;background:white;cursor:pointer;">
+                <option value="student">🎓 Un Étudiant</option>
+                <option value="professor">📚 Un Professeur</option>
+            </select>
+        </div>
+        <button type="submit" class="btn-submit">
+            <i class="fas fa-user-plus" style="margin-right:8px;"></i>Créer mon compte
+        </button>
+    </form>
+
+    <div class="auth-links">
+        Déjà membre ? <a href="{% url 'login' %}">Se connecter</a>
+    </div>
+    <div style="text-align:center;margin-top:12px;">
+        <a href="/" style="color:#aaa;font-size:0.85rem;text-decoration:none;">
+            <i class="fas fa-arrow-left" style="margin-right:4px;"></i>Retour à l'accueil
+        </a>
+    </div>
+</div>
+
+<style>
+    input { width: 100%; padding: 12px; border: 1.5px solid #e5e9f0; border-radius: 8px; box-sizing: border-box; font-family: 'DM Sans', sans-serif; font-size: 0.9rem; outline: none; transition: border-color 0.2s; }
+    input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(0,51,102,0.06); }
+</style>
+{% endblock %}

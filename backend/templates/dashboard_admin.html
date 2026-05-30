@@ -1,0 +1,44 @@
+{% extends "base_dashboard.html" %}
+
+{% block content %}
+<div class="section-title">Espace Étudiant</div>
+
+<p style="text-align: center; font-size: 1.2rem; margin-bottom: 40px; color: #555;">
+    Bienvenue, <strong>{{ user.username }}</strong>. Voici le catalogue des cours disponibles pour votre inscription.
+</p>
+
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>Code</th>
+                <th>Matière</th>
+                <th>Département</th>
+                <th>Professeur</th>
+                <th>Crédits</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for course in courses %}
+            <tr>
+                <td><strong>{{ course.code }}</strong></td>
+                <td>{{ course.name }}</td>
+                <td>{{ course.department.name }}</td>
+                <td>
+                    {% if course.professor %}
+                        {{ course.professor.user.last_name }} {{ course.professor.user.first_name }}
+                    {% else %}
+                        <em>Non assigné</em>
+                    {% endif %}
+                </td>
+                <td>{{ course.credits }} ECTS</td>
+                <td><button style="padding: 5px 10px; background: var(--secondary); border: none; border-radius: 4px; cursor: pointer; color: var(--primary); font-weight: bold;">S'inscrire</button></td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="6" style="text-align: center;">Aucun cours disponible pour le moment.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

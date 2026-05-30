@@ -1,16 +1,18 @@
 # AI University Platform
 
+![Project Overview](screenshots/project-poster.png)
+
 University management platform featuring an AI-powered chatbot, REST APIs, and role-based dashboards for students, professors, and administrators.
 
 ## Features
 
-* AI chatbot integration
+* AI chatbot powered by Groq / LLaMA 3
 * Student dashboard
 * Professor dashboard
 * Administrator dashboard
-* Authentication and user management
-* Faculty and course management
-* REST API architecture
+* Authentication system
+* REST APIs
+* Academic management (courses, grades, absences, exams)
 
 ## Technologies
 
@@ -20,13 +22,16 @@ University management platform featuring an AI-powered chatbot, REST APIs, and r
 * JavaScript
 * HTML/CSS
 * SQLite
+* Groq API
+* LLaMA 3
 
-## Project Structure
+## Architecture
 
-```text
-backend/
-frontend/
-```
+* Frontend (HTML/CSS/JavaScript)
+* Backend (Django)
+* REST APIs
+* AI Agent Layer
+* Database Layer
 
 ## Installation
 
@@ -40,6 +45,7 @@ python manage.py runserver
 
 ## Future Improvements
 
-* Cloud deployment
-* Enhanced AI capabilities
-* Advanced analytics and reporting
+* PostgreSQL deployment
+* Cloud hosting
+* RAG architecture
+* Advanced analytics
